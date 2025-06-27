@@ -1,8 +1,5 @@
 FROM node:lts-alpine as build
 
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
-
 WORKDIR /app
 
 COPY package*.json ./
@@ -11,6 +8,9 @@ RUN rm -rf node_modules
 RUN rm -rf build
 
 COPY . .
+
+RUN cp .env.production .env
+
 
 RUN npm ci
 RUN npm run build
