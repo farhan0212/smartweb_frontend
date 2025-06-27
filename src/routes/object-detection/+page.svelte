@@ -61,7 +61,6 @@ setInterval(async () => {
 
   try {
     const url = "/api/detections";
-    console.log("🔗 Uploading to:", url);
     const res = await fetch(url, {
       method: "POST",
       headers: {
@@ -71,7 +70,7 @@ setInterval(async () => {
     });
 
     const data = await res.json();
-    console.log("✅ Upload success:", data);
+    console.log("✅ Upload success:");
   } catch (error) {
     console.error("❌ Upload failed:", error);
   }
