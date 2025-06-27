@@ -60,7 +60,7 @@ setInterval(async () => {
   };
 
   try {
-    const url = "/api/detections";
+    const url = import.meta.env.VITE_API_URL;
     const res = await fetch(url, {
       method: "POST",
       headers: {
