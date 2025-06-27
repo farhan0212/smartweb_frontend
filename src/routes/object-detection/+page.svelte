@@ -60,7 +60,7 @@ setInterval(async () => {
   };
 
   try {
-    const url = import.meta.env.VITE_API_URL;
+    const url = "/api/detections";
     console.log("🔗 Uploading to:", url);
     const res = await fetch(url, {
       method: "POST",
