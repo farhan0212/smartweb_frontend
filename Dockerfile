@@ -1,29 +1,20 @@
-FROM node:lts-alpine as build
+FROM node:lts-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
-
-RUN rm -rf node_modules
-RUN rm -rf build
+COPY package*.json .
 
 COPY . .
 
-RUN cp .env.production .env
-
+COPY .env.production .env
 
 RUN npm ci
 RUN npm run build
 
-FROM node:lts-alpine as run
+FROM nginx:alpine
 
-WORKDIR /app
+COPY --from=builder  /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/build ./build
-
-RUN npm install --production
-
-EXPOSE 2000
-
-ENTRYPOINT [ "npm", "run", "start" ]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
