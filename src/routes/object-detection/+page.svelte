@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import * as tf from "@tensorflow/tfjs";
   import * as cocoSsd from "@tensorflow-models/coco-ssd";
-  import axios from "axios";
 
   let videoRef;
   let canvasRef;
@@ -60,23 +59,19 @@ setInterval(async () => {
     predictions: prediction, 
   };
 
-  try {
-    const url = import.meta.env.VITE_API_URL;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await res.json();
-    console.log("✅ Upload success:");
-  } catch (error) {
-    console.error("❌ Upload failed:", error);
-  }
+try {
+  const url = import.meta.env.VITE_API_URL;
+  const res = await axios.post(url, payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  console.log("✅ Upload success:", res.data);
+} catch (error) {
+  console.error("❌ Upload failed:", error);
+  alert("Upload failed. Please try again.");
 }
-
+ }
 
   async function handleTakePhoto() {
   try {
@@ -105,7 +100,7 @@ setInterval(async () => {
   <!-- Navigation -->
   <nav class="flex items-center justify-between px-8 py-6">
     <div class="text-white text-xl font-bold">
-      FANI Innovations Technology
+        NeoDetect
     </div>
     <!-- <div class="flex space-x-8">
       <a href="#" class="text-gray-300 hover:text-white transition-colors">Home</a>
