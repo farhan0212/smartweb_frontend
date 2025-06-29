@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import * as tf from "@tensorflow/tfjs";
   import * as cocoSsd from "@tensorflow-models/coco-ssd";
+  import axios from "axios";
 
   let videoRef;
   let canvasRef;
